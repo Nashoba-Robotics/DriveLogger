@@ -9,6 +9,8 @@ import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.commands.ExampleCommand;
 import frc.robot.commands.LogTestCommand;
+import frc.robot.commands.StepCommand;
+import frc.robot.commands.TestCommand;
 import frc.robot.subsystems.ExampleSubsystem;
 import edu.wpi.first.wpilibj2.command.Command;
 
@@ -39,6 +41,8 @@ public class RobotContainer {
    */
   private void configureButtonBindings() {
     SmartDashboard.putData(new LogTestCommand());
+    SmartDashboard.putData(new StepCommand());
+    SmartDashboard.putData(new TestCommand());
   }
 
   /**

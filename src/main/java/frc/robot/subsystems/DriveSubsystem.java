@@ -2,6 +2,7 @@ package frc.robot.subsystems;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.InvertType;
+import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.TalonFX;
 import com.ctre.phoenix.sensors.PigeonIMU;
 
@@ -41,6 +42,12 @@ public class DriveSubsystem extends SubsystemBase{
         left3.setInverted(InvertType.FollowMaster);
 
         pigeon = new PigeonIMU(0);
+
+        left1.setNeutralMode(NeutralMode.Coast);
+        right1.setNeutralMode(NeutralMode.Coast);
+
+        acceleration = new short[3];
+        speedxyz = new double[3];
     }
 
     public void setLeft(double speed) {
