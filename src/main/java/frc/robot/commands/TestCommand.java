@@ -9,6 +9,7 @@ public class TestCommand extends CommandBase{
     public void initialize() {
         // TODO Auto-generated method stub
         super.initialize();
+        //HALLO
     }
 
     @Override
