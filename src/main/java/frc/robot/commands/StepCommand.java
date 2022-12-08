@@ -10,6 +10,9 @@ import frc.robot.subsystems.NewDriveSubsystem;
 
 public class StepCommand extends CommandBase {
     DataLog log;
+
+    DoubleLogEntry givenSpeed;
+
     DoubleLogEntry leftMotorVelocity;
     DoubleLogEntry leftStatorCurrent;
     DoubleLogEntry leftSupplyCurrent;
@@ -22,6 +25,8 @@ public class StepCommand extends CommandBase {
     DoubleLogEntry pigeonAccelerationY;
     DoubleLogEntry pigeonAccelerationZ;
 
+    double speed = 0;
+
     public StepCommand(){
         addRequirements(NewDriveSubsystem.getInstance());
     }
@@ -30,6 +35,8 @@ public class StepCommand extends CommandBase {
     public void initialize() {
         DataLogManager.start();
         log = DataLogManager.getLog();
+
+        givenSpeed = new DoubleLogEntry(log, "GivenSpeed");
 
         leftMotorVelocity = new DoubleLogEntry(log, "LeftMotorVelocity");
         leftStatorCurrent = new DoubleLogEntry(log, "LeftStatorCurrnet");
@@ -42,23 +49,32 @@ public class StepCommand extends CommandBase {
         pigeonAccelerationX = new DoubleLogEntry(log, "PigeonAccelerationX");
         pigeonAccelerationY = new DoubleLogEntry(log, "PigeonAccelerationY");
         pigeonAccelerationZ = new DoubleLogEntry(log, "PigeonAccelerationZ");
+
+        SmartDashboard.putNumber("Speed", 0);
     }
 
     //Getting values from old Drive Subsystem -> CHANGE
     @Override
     public void execute() {
-        leftMotorVelocity.append(NewDriveSubsystem.getInstance().getLeftMotorVelocity());
-        leftStatorCurrent.append(NewDriveSubsystem.getInstance().getLeftStatorCurrent());
-        leftSupplyCurrent.append(NewDriveSubsystem.getInstance().getLeftSupplyCurrent());
+        speed = SmartDashboard.getNumber("Speed", 0);
 
-        rightMotorVelocity.append(NewDriveSubsystem.getInstance().getRightMotorVelocity());
-        rightStatorCurrent.append(NewDriveSubsystem.getInstance().getRightStatorCurrent());
-        rightSupplyCurrent.append(NewDriveSubsystem.getInstance().getRightSupplyCurrent());
+        if(speed > 0){
+            givenSpeed.append(speed);
 
-        pigeonAccelerationX.append(NewDriveSubsystem.getInstance().getAccelX());
-        pigeonAccelerationY.append(NewDriveSubsystem.getInstance().getAccelY());
-        pigeonAccelerationZ.append(NewDriveSubsystem.getInstance().getAccelZ());
-        NewDriveSubsystem.getInstance().set(0.3);
+            leftMotorVelocity.append(NewDriveSubsystem.getInstance().getLeftMotorVelocity());
+            leftStatorCurrent.append(NewDriveSubsystem.getInstance().getLeftStatorCurrent());
+            leftSupplyCurrent.append(NewDriveSubsystem.getInstance().getLeftSupplyCurrent());
+
+            rightMotorVelocity.append(NewDriveSubsystem.getInstance().getRightMotorVelocity());
+            rightStatorCurrent.append(NewDriveSubsystem.getInstance().getRightStatorCurrent());
+            rightSupplyCurrent.append(NewDriveSubsystem.getInstance().getRightSupplyCurrent());
+
+            pigeonAccelerationX.append(NewDriveSubsystem.getInstance().getAccelX());
+            pigeonAccelerationY.append(NewDriveSubsystem.getInstance().getAccelY());
+            pigeonAccelerationZ.append(NewDriveSubsystem.getInstance().getAccelZ());
+
+            NewDriveSubsystem.getInstance().set(speed);
+        }
     }
 
     @Override

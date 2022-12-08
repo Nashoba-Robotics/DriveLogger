@@ -40,9 +40,9 @@ public class RobotContainer {
    * edu.wpi.first.wpilibj2.command.button.JoystickButton}.
    */
   private void configureButtonBindings() {
-    SmartDashboard.putData(new LogTestCommand());
+    //SmartDashboard.putData(new LogTestCommand());
     SmartDashboard.putData(new StepCommand());
-    SmartDashboard.putData(new TestCommand());
+    //SmartDashboard.putData(new TestCommand());
   }
 
   /**
